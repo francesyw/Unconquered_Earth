@@ -1,3 +1,4 @@
+import codeanticode.syphon.*;
 import de.voidplus.leapmotion.*;
 import java.text.*;
 import processing.opengl.*;
@@ -37,6 +38,8 @@ int maxCount=1;
 
 int ii=0;
 
+SyphonServer server;
+
 LeapMotion leap;
 leapControl leapC;
 eqData eqData;
@@ -49,15 +52,10 @@ eqAnimate eqAnimate;
 //=========================================
 
 void setup() {
-
   size(screenWidth, screenHeight, P3D);
-//  if (frame != null) {
-//    frame.setResizable(true);
-//  }
 
 //  frame.setLocation(1280, 0);
 //  frame.setAlwaysOnTop(false);
-
 
   lastTime = millis();
 
@@ -94,9 +92,11 @@ void setup() {
   font = loadFont("HelveticaNeue-UltraLight-200.vlw");
   font2 = createFont("HelveticaNeue-Medium-48.vlw", 16, true);
 
-
   background(0);
   smooth();
+  
+  // Create syhpon server to send frames out.
+  server = new SyphonServer(this, "Processing Syphon");
 }
 
 
@@ -178,6 +178,8 @@ if (leapC.isZoom == true ||keyPressed && key == 'z'){
       handsLastTime = millis();
     }
   }
+  
+  server.sendScreen();
 }
 
 
