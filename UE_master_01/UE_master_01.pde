@@ -96,7 +96,7 @@ void setup() {
   smooth();
   
   // Create syhpon server to send frames out.
-  server = new SyphonServer(this, "Processing Syphon");
+  server = new SyphonServer(this, "Processing Globe");
 }
 
 
@@ -180,6 +180,7 @@ if (leapC.isZoom == true ||keyPressed && key == 'z'){
   }
   
   server.sendScreen();
+//  println(frameRate);
 }
 
 
