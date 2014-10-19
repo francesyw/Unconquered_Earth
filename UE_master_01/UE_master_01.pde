@@ -62,7 +62,7 @@ void setup() {
   texMap = loadImage("noinvert.png");
   texMap2 = loadImage("invert.png");
   back = loadImage("back2.png");
-  back2 = loadImage("back3.png");
+//  back2 = loadImage("back3.png");
   glow = loadImage("glow.png");
   earth = new Earth();
   earth.initializeSphere(sDetail);    
@@ -92,7 +92,7 @@ void setup() {
   font = loadFont("HelveticaNeue-UltraLight-200.vlw");
   font2 = createFont("HelveticaNeue-Medium-48.vlw", 16, true);
 
-  background(0);
+//  background(0);
   smooth();
   
   // Create syhpon server to send frames out.
@@ -108,23 +108,24 @@ void draw() {
   
   //background circle clears only
   globeRadius = 1;
-if (leapC.isZoom == true ||keyPressed && key == 'z'){
+//if (leapC.isZoom == true ||keyPressed && key == 'z'){
   fill(0,255);
-  rect(-2,-2,width+2,height+2);
-} else {
+//  rect(-2,-2,width+2,height+2);
+//} else {
   tint(0, 0, 0, 225);
-  image(back, width/2, height/2, 500, 500);
-}
+  
+//}
   fill(0, 18);
-  rect(-1, -1, width+2, height+2);
+//  rect(-1, -1, width+2, height+2);
   hint(DISABLE_DEPTH_TEST);
   imageMode(CENTER);
 
   realTimeUpdate();  // *Update the data every one and half minute.
 
   pushMatrix();
-
+  image(back, width/2, height/2, 630, 630);
   translate(width/2, height/2, 300);
+  
 //  rotateX(radians(0.0));
 //  rotateY(radians(0.0));
 //  rotateZ(radians(-35.5));
@@ -168,15 +169,15 @@ if (leapC.isZoom == true ||keyPressed && key == 'z'){
     handsLastTime = millis();
   }
 
-  leapC.zoomGlobe();
+//  leapC.zoomGlobe();
 
   if (!isHands) {     
     r_mapY += 0.2;
-    if ( millis() - handsLastTime >= 5000 ) {
-      leapC.zoomGlobe = 'O';
-      leapC.zoomGlobe();
-      handsLastTime = millis();
-    }
+//    if ( millis() - handsLastTime >= 5000 ) {
+//      leapC.zoomGlobe = 'O';
+//      leapC.zoomGlobe();
+//      handsLastTime = millis();
+//    }
   }
   
   server.sendScreen();

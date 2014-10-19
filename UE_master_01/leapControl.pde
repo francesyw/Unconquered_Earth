@@ -2,6 +2,7 @@ class leapControl {
 
   boolean oneFinger = false;
   boolean leap_trigger = false;
+  boolean osc_trigger = false;
   float r_yStart;
   boolean isZoom;
   char zoomGlobe = 'D';
@@ -13,8 +14,7 @@ class leapControl {
 
     if (num_finger > 1) {
       oneFinger = false;
-    }
-    else {
+    } else {
       oneFinger = true;
     }
   }
@@ -42,70 +42,36 @@ class leapControl {
           //--Limit the rotationX range
           if (r_mapX < -50.0) {
             r_mapX = -50.0;
-          }
-          else if (r_mapX > 40.0) {
+          } else if (r_mapX > 40.0) {
             r_mapX = 40.0;
           }
-
-          //--Zoom in/out
-          if (!isZoom) {
-            if (hand_position.y > 600) {
-              zoomGlobe = 'I';
-              println("zoom in | " + hand_position.y);
-              isZoom = true;
-            }
-            else if (hand_position.y < 90) {
-              zoomGlobe = 'O';
-              println("zoom out | " + hand_position.y);
-              isZoom = true;
-            }
-          }
-          else if (hand_position.y < 600 && hand_position.y > 90) {
-            isZoom = false;
-            // zoomGlobe = 'D';
-          }
-        }
-        else {
+          
+          osc_trigger = false;
+          
+        } else {
+//          println(hand_position.y);
           //--Use one finger to trigger the event  
-          if (hand_position.y < 500 && hand_position.y > 120 && finger_velocity.y > 2500) {
+          if (hand_position.y < 500 && hand_position.y > 120 && !osc_trigger) {
 
             //--randomly trigger an event within the area.
             if (eqCords.drawRawLon.size()!= 0) {
               triGlitch_osc = eqData.destrRawLonList.indexOf(triggerEvent);
-              
-              println("trigger: "+finger_velocity.y+" | Lon: "+triggerEvent+" | Index: "+triGlitch_osc);
+  
+              println("trigger || Lon: "+triggerEvent+" | Index: "+triGlitch_osc);
               osc.send();
+              osc_trigger = true;
             }
           }
+          
         }
-      }
-      else {
+      } else {
         r_mapY += 0.05;
       }
-    }
-    else {
+    } else {
       leap_trigger = true;
       r_mapY += 0.05;
     }
   }	
-
-
-  void zoomGlobe() {
-
-    switch (zoomGlobe) {
-    case 'I' :
-//      zoom = lerp(zoom, 470, 0.08);
-      break; 
-
-    case 'O' :
-//      zoom = lerp(zoom, 370, 0.05);
-      break; 
-
-    default :	          
-      break;
-    }
-  }
-
 
   float setRotationY(float hand_positionX, float r_mapY_start) {
     r_yStart = r_mapY_start - ((270.0 / (1200.0-100.0)) * (hand_positionX-100.0));

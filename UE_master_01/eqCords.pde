@@ -15,6 +15,8 @@ class eqCords {
   PVector drawPosD = new PVector(); // *position of the obj inside the globe
   float centerLon;
   float centerLat;
+  float currentCenterLon;
+  float currentCenterLat;
   float r_mapY_b;
   int r_mapY_a;
   float destrRawLon;
@@ -107,20 +109,24 @@ class eqCords {
           drawRawLon.add(destrRawLon);
           drawSize.add(1.5);
           //              println(" RawLon: "+drawRawLon.get(drawRawLon.size()-1)+" | "+drawSize.size()+" objs");
-        } else if (destrRawLon > (centerLon-5) && destrRawLon < (centerLon+5)) {
-          
-          
-          if (leapC.oneFinger) {
+        } else if (destrRawLon > (centerLon-5) && destrRawLon < (centerLon+5)) {                    
 
             if (!textOnce) {
               index = int(random(drawRawLon.size()));            
               triggerEvent = drawRawLon.get(index);
               leapC.triggerEvent = triggerEvent;
+              currentCenterLon = centerLon;
+              currentCenterLat = centerLat;
+              textOnce = true;
             }
 
+            if (abs(centerLon - currentCenterLon) > 2 || abs(centerLat - currentCenterLat) > 2) {
+              textOnce = false;
+            }
+            
             if (destrRawLon == triggerEvent) {
               draw3D(4.5);
-              textOnce = true;
+              
               //                hint(DISABLE_DEPTH_TEST);            
               pushStyle();
               pushMatrix();
@@ -131,7 +137,7 @@ class eqCords {
               noStroke();
               rectMode(CENTER);
               fill(0, 170);
-              rect(0, 0, 302, 13);
+//              rect(0, 0, 302, 13);
               fill(129, 228, 232, 217);
               textFont(font);
               textSize(1.5);
@@ -146,7 +152,7 @@ class eqCords {
             } else {
               draw3D(1.5);
             }
-          } else {
+
             sizeIndex = drawRawLon.indexOf(destrRawLon);
             drawSize.set(sizeIndex, lerp(drawSize.get(sizeIndex), 4.0, 1.5));         
             draw3D(drawSize.get(sizeIndex));
@@ -168,8 +174,7 @@ class eqCords {
             popMatrix();
             popStyle();
             hint(ENABLE_DEPTH_TEST);
-            textOnce = false;
-          }
+            
         } else if (destrRawLon >= (centerLon+5)) {
           sizeIndex = drawRawLon.indexOf(destrRawLon);
           drawSize.set(sizeIndex, lerp(drawSize.get(sizeIndex), 1.5, 0.1));         
@@ -182,6 +187,7 @@ class eqCords {
           drawSize.remove(0);
         }
         draw3D(1.5);
+        
       }
 
       popMatrix();

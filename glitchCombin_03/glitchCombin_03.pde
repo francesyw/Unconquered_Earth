@@ -1,6 +1,8 @@
+import codeanticode.syphon.*;
 import oscP5.*;
 import netP5.*;
 
+SyphonServer server;
 OscP5 oscP5;
 NetAddress myRemoteLocation;
 
@@ -31,8 +33,9 @@ PGraphics texts;
 PGraphics images;
 boolean textOn=true;
 boolean isNew1=true;
+
 void setup() {
-  size(2560, 1024);
+  size(1280, 720, P3D);
 
   font = loadFont("HelveticaNeueLTStd-UltLt-200.vlw");
   textFont(font);
@@ -65,6 +68,8 @@ void setup() {
     }
   }
   image(map[eventNumber], 0, 0);
+  
+  server = new SyphonServer(this, "Processing Glitch");
 }
 
 
@@ -104,6 +109,8 @@ void draw() {
   }
   noStroke();
   rect(0, 0, width, height);
+//  println(frameRate);
+  server.sendScreen();
 }
 
 void ifif() {
