@@ -178,26 +178,12 @@ void mousePressed() {
 }
 
 void oscEvent(OscMessage theOscMessage) {
-  /* print the address pattern and the typetag of the received OscMessage */
-  // print("### received an osc message.");
-  //print(" addrpattern: "+theOscMessage.addrPattern());
-  // println(" typetag: "+theOscMessage.typetag());
   events=theOscMessage.get(0).intValue();
+  
   println("event: "+events);
   sSwitch=true;
   temp=frameCount;
   rand=(int)random(4);
-  /*
-  if (theOscMessage.checkAddrPattern("/index")==true) {
-   particles = new Particle[(width+particleMargin*2)/particlesDensity*(height+particleMargin*2)/particlesDensity];
-   int i = 0;
-   for (int y=-particleMargin; y<height+particleMargin; y+=particlesDensity) {
-   for (int x=-particleMargin; x<width+particleMargin; x+=particlesDensity) {
-   int c = color(map[eventNumber].get(x, y), 60);
-   particles[i++] = new Particle(x, y, c);
-   }
-   }
-   }
-   */
+
 }
 

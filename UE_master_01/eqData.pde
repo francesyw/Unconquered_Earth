@@ -113,6 +113,7 @@ class eqData {
           lonList.add(countFilter, mapLong);
           depthList.add(countFilter, mapDepth);        
           magList.add(countFilter, mag);    
+          placeList.add(0, place); 
           titleList.add(0, title);      
           countFilter++;  
           // println(countFilter);
