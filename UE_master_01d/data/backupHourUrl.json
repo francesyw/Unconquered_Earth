@@ -1,0 +1,51 @@
+{
+  "features": [{
+    "id": "ci37282688",
+    "properties": {
+      "detail": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/ci37282688.geojson",
+      "type": "earthquake",
+      "net": "ci",
+      "tsunami": null,
+      "sources": ",ci,",
+      "title": "M 1.1 - 6km ESE of Valle Vista, California",
+      "time": 1414357890490,
+      "updated": 1414358533880,
+      "mag": 1.14,
+      "place": "6km ESE of Valle Vista, California",
+      "types": ",focal-mechanism,general-link,geoserve,nearby-cities,origin,phase-data,scitech-link,",
+      "status": "automatic",
+      "alert": null,
+      "ids": ",ci37282688,",
+      "rms": 0.2,
+      "code": "37282688",
+      "url": "http://earthquake.usgs.gov/earthquakes/eventpage/ci37282688",
+      "magType": "ml",
+      "mmi": null,
+      "cdi": null,
+      "tz": -420,
+      "felt": null,
+      "nst": 40,
+      "dmin": 0.08541,
+      "sig": 20,
+      "gap": 40
+    },
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -116.83,
+        33.7215,
+        18
+      ]
+    }
+  }],
+  "type": "FeatureCollection",
+  "metadata": {
+    "title": "USGS All Earthquakes, Past Hour",
+    "count": 1,
+    "status": 200,
+    "generated": 1414361342000,
+    "api": "1.0.13",
+    "url": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson"
+  }
+}
