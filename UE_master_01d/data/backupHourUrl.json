@@ -1,50 +1,260 @@
 {
-  "features": [{
-    "id": "ci37282688",
-    "properties": {
-      "detail": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/ci37282688.geojson",
-      "type": "earthquake",
-      "net": "ci",
-      "tsunami": null,
-      "sources": ",ci,",
-      "title": "M 1.1 - 6km ESE of Valle Vista, California",
-      "time": 1414357890490,
-      "updated": 1414358533880,
-      "mag": 1.14,
-      "place": "6km ESE of Valle Vista, California",
-      "types": ",focal-mechanism,general-link,geoserve,nearby-cities,origin,phase-data,scitech-link,",
-      "status": "automatic",
-      "alert": null,
-      "ids": ",ci37282688,",
-      "rms": 0.2,
-      "code": "37282688",
-      "url": "http://earthquake.usgs.gov/earthquakes/eventpage/ci37282688",
-      "magType": "ml",
-      "mmi": null,
-      "cdi": null,
-      "tz": -420,
-      "felt": null,
-      "nst": 40,
-      "dmin": 0.08541,
-      "sig": 20,
-      "gap": 40
+  "bbox": [
+    -122.8239975,
+    33.2935,
+    2.12,
+    -116.2698333,
+    38.8348351,
+    18
+  ],
+  "features": [
+    {
+      "id": "nc72336866",
+      "properties": {
+        "detail": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/nc72336866.geojson",
+        "type": "earthquake",
+        "net": "nc",
+        "tsunami": null,
+        "sources": ",nc,",
+        "title": "M 0.2 - 6km WNW of Cobb, California",
+        "time": 1414903512420,
+        "updated": 1414903605200,
+        "mag": 0.19,
+        "place": "6km WNW of Cobb, California",
+        "types": ",general-link,geoserve,nearby-cities,origin,phase-data,",
+        "status": "automatic",
+        "alert": null,
+        "ids": ",nc72336866,",
+        "rms": 0.01,
+        "code": "72336866",
+        "url": "http://earthquake.usgs.gov/earthquakes/eventpage/nc72336866",
+        "magType": "md",
+        "mmi": null,
+        "cdi": null,
+        "tz": -420,
+        "felt": null,
+        "nst": 6,
+        "dmin": 0.01358,
+        "sig": 1,
+        "gap": 108
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8006668,
+          38.8348351,
+          2.48
+        ]
+      }
     },
-    "type": "Feature",
-    "geometry": {
-      "type": "Point",
-      "coordinates": [
-        -116.83,
-        33.7215,
-        18
-      ]
+    {
+      "id": "nn00465903",
+      "properties": {
+        "detail": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/nn00465903.geojson",
+        "type": "earthquake",
+        "net": "nn",
+        "tsunami": null,
+        "sources": ",nn,",
+        "title": "M 1.8 - 32km SSW of Hawthorne, Nevada",
+        "time": 1414901694522,
+        "updated": 1414902800446,
+        "mag": 1.84,
+        "place": "32km SSW of Hawthorne, Nevada",
+        "types": ",cap,general-link,geoserve,nearby-cities,origin,phase-data,",
+        "status": "reviewed",
+        "alert": null,
+        "ids": ",nn00465903,",
+        "rms": 0.1325,
+        "code": "00465903",
+        "url": "http://earthquake.usgs.gov/earthquakes/eventpage/nn00465903",
+        "magType": "ml",
+        "mmi": null,
+        "cdi": null,
+        "tz": -420,
+        "felt": null,
+        "nst": 16,
+        "dmin": 0.193,
+        "sig": 52,
+        "gap": 40.96
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.7983,
+          38.266,
+          12.2021
+        ]
+      }
+    },
+    {
+      "id": "ci37284528",
+      "properties": {
+        "detail": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/ci37284528.geojson",
+        "type": "earthquake",
+        "net": "ci",
+        "tsunami": null,
+        "sources": ",ci,",
+        "title": "M 1.1 - 10km ENE of Borrego Springs, California",
+        "time": 1414900874090,
+        "updated": 1414901127010,
+        "mag": 1.12,
+        "place": "10km ENE of Borrego Springs, California",
+        "types": ",general-link,geoserve,nearby-cities,origin,phase-data,scitech-link,",
+        "status": "automatic",
+        "alert": null,
+        "ids": ",ci37284528,",
+        "rms": 0.31,
+        "code": "37284528",
+        "url": "http://earthquake.usgs.gov/earthquakes/eventpage/ci37284528",
+        "magType": "ml",
+        "mmi": null,
+        "cdi": null,
+        "tz": -420,
+        "felt": null,
+        "nst": 36,
+        "dmin": 0.1014,
+        "sig": 19,
+        "gap": 38
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.2698333,
+          33.2935,
+          2.12
+        ]
+      }
+    },
+    {
+      "id": "nc72336856",
+      "properties": {
+        "detail": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/nc72336856.geojson",
+        "type": "earthquake",
+        "net": "nc",
+        "tsunami": null,
+        "sources": ",nc,",
+        "title": "M 0.5 - 7km NW of The Geysers, California",
+        "time": 1414900556130,
+        "updated": 1414902068423,
+        "mag": 0.52,
+        "place": "7km NW of The Geysers, California",
+        "types": ",general-link,geoserve,nearby-cities,origin,phase-data,scitech-link,",
+        "status": "automatic",
+        "alert": null,
+        "ids": ",nc72336856,",
+        "rms": 0.02,
+        "code": "72336856",
+        "url": "http://earthquake.usgs.gov/earthquakes/eventpage/nc72336856",
+        "magType": "md",
+        "mmi": null,
+        "cdi": null,
+        "tz": -420,
+        "felt": null,
+        "nst": 7,
+        "dmin": 0.008728,
+        "sig": 4,
+        "gap": 136
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8239975,
+          38.824501,
+          3.17
+        ]
+      }
+    },
+    {
+      "id": "ci37284520",
+      "properties": {
+        "detail": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/ci37284520.geojson",
+        "type": "earthquake",
+        "net": "ci",
+        "tsunami": null,
+        "sources": ",ci,",
+        "title": "M 0.8 - 5km SSW of Idyllwild, California",
+        "time": 1414900375710,
+        "updated": 1414900654890,
+        "mag": 0.81,
+        "place": "5km SSW of Idyllwild, California",
+        "types": ",general-link,geoserve,nearby-cities,origin,phase-data,scitech-link,",
+        "status": "automatic",
+        "alert": null,
+        "ids": ",ci37284520,",
+        "rms": 0.14,
+        "code": "37284520",
+        "url": "http://earthquake.usgs.gov/earthquakes/eventpage/ci37284520",
+        "magType": "ml",
+        "mmi": null,
+        "cdi": null,
+        "tz": -420,
+        "felt": null,
+        "nst": 27,
+        "dmin": 0.0346,
+        "sig": 10,
+        "gap": 59
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.75,
+          33.6936667,
+          18
+        ]
+      }
+    },
+    {
+      "id": "nc72336851",
+      "properties": {
+        "detail": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/nc72336851.geojson",
+        "type": "earthquake",
+        "net": "nc",
+        "tsunami": null,
+        "sources": ",nc,",
+        "title": "M 0.6 - 6km NW of The Geysers, California",
+        "time": 1414900257930,
+        "updated": 1414901642623,
+        "mag": 0.55,
+        "place": "6km NW of The Geysers, California",
+        "types": ",general-link,geoserve,nearby-cities,origin,phase-data,scitech-link,",
+        "status": "automatic",
+        "alert": null,
+        "ids": ",nc72336851,",
+        "rms": 0.02,
+        "code": "72336851",
+        "url": "http://earthquake.usgs.gov/earthquakes/eventpage/nc72336851",
+        "magType": "md",
+        "mmi": null,
+        "cdi": null,
+        "tz": -420,
+        "felt": null,
+        "nst": 10,
+        "dmin": 0.01043,
+        "sig": 5,
+        "gap": 118
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.815834,
+          38.8088341,
+          3.21
+        ]
+      }
     }
-  }],
+  ],
   "type": "FeatureCollection",
   "metadata": {
     "title": "USGS All Earthquakes, Past Hour",
-    "count": 1,
+    "count": 6,
     "status": 200,
-    "generated": 1414361342000,
+    "generated": 1414903706000,
     "api": "1.0.13",
     "url": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson"
   }
