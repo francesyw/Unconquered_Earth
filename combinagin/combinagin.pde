@@ -25,7 +25,7 @@ char month = 'M';
 StringList finalText;
 PFont myFont;
 
-int  oop=0;
+int oop=0;
 int slt;
 boolean sSwitch=false;
 boolean textOn=true;
@@ -34,7 +34,7 @@ int rand=0;
 int temp=0;
 color c=color(80, 216, 252, 80);
 void setup() {
-  size(1024, 768, P2D);
+  size(1024, 768, P3D);
   //  map=loadImage("2_Caracas.jpg");
 
   dead1 = loadShape("dead.svg");
@@ -44,7 +44,7 @@ void setup() {
   magnitude1 = loadShape("magnitude.svg");
   //textMode(SCREEN);
   //myFont=createFont("HelveticaNeueLTStd-Roman.otf", 48);
-  myFont=createFont("Arial.ttf", 48);
+  myFont=createFont("Arial.ttf", 72);
 
 
   eqData = new eqData();
@@ -53,7 +53,7 @@ void setup() {
   server = new SyphonServer(this, "Processing Glitch");
 
   table=loadTable("Destruction Data_03.csv", "header");
-  for (int i=0;i<71;i++) {
+  for (int i=0; i<71; i++) {
     map[i]=loadImage((2556*2/71-(i+1))+"_"+table.getString(i, "Event Name")+".jpg");
   }
 
@@ -209,18 +209,22 @@ void texts() {
   //fill(255, 0, 0);
   fill(255);
   text("live earthquakes", xc, height/16*10);
-  fill(254, 56, 10);
+  fill(240, 56, 10);
+
   if (eqData.countHour !=0) {
-    if (eqData.countHour>4) {
-      eqData.countHour=4;
+    if (eqData.countHour > 4) {
+      eqData.countHour = 4;
     }
-    for (int i=0;i<4;i++) {
-      textSize(18);
+    
+    for (int i = 0; i < eqData.countHour; i++) {
+      println(eqData.countHour);
+      textSize(16);
       text(eqData.titleList.get(i), xc, height/16*(11+i*0.5));
     }
+    
     maxCounthour=eqData.countHour;
   } else {
-    for (int i=0;i<maxCounthour;i++) {
+    for (int i=0; i<maxCounthour; i++) {
       textSize(18);
       text(eqData.titleList.get(i), xc, height/16*(11+i*0.5));
     }
@@ -287,6 +291,7 @@ void realTimeUpdate() {
   //  *Update every one and half minute
   if ( millis() - lastTime >= 60000 ) {
     //  *Load all_hour data
+
     eqData.init(hourURL);
     eqData.update(hour);
     println( "all_hour data updated!" );
