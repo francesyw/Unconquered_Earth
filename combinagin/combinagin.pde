@@ -225,7 +225,7 @@ void texts() {
       }
 
       for (int i = 0; i < eqData.countHour; i++) {
-        println(eqData.countHour);
+       // println(eqData.countHour);
         textSize(16);
         text(eqData.titleList.get(i), xc, height/16*(11+i*0.5));
       }
@@ -301,8 +301,10 @@ void realTimeUpdate() {
   if ( millis() - lastTime >= 60000 ) {
     //  *Load all_hour data
     ifNoInternet();
+    if(ifWifi==true){
     eqData.init(hourURL);
     eqData.update(hour);
+    }
     println( "all_hour data updated!" );
     //isHour = true;
     lastTime = millis();
