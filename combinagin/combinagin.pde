@@ -1,6 +1,11 @@
 import codeanticode.syphon.*;
 import oscP5.*;
 import netP5.*;
+//import java.net.*;
+import java.net.URL.*;
+import java.io.*;
+import java.net.MalformedURLException;
+import processing.opengl.*;
 
 SyphonServer server;
 OscP5 oscP5;
@@ -29,6 +34,7 @@ int oop=0;
 int slt;
 boolean sSwitch=false;
 boolean textOn=true;
+boolean ifWifi=true;
 int events=0;
 int rand=0;
 int temp=0;
@@ -45,7 +51,7 @@ void setup() {
   //textMode(SCREEN);
   //myFont=createFont("HelveticaNeueLTStd-Roman.otf", 48);
   myFont=createFont("Arial.ttf", 72);
-
+  ifNoInternet();
 
   eqData = new eqData();
   eqData.update(month);
@@ -121,6 +127,7 @@ void ifif() {
     eventNumber=events;
     //switchNum=(switchNum+1)%5;
     //eventNumber=(eventNumber+1)%71;
+    glitches.tint(255, 255);
     glitches.image(map[eventNumber], 0, 0);
     glitches.filter(GRAY);
     glitches.tint(c);
@@ -205,28 +212,30 @@ void texts() {
   shape(homeless1, xc, height/16*5.05, xc, xc);
   text(finalText.get(5), 60, height/16*5);
   //==============================
-  textSize(24);
-  //fill(255, 0, 0);
-  fill(255);
-  text("live earthquakes", xc, height/16*10);
-  fill(240, 56, 10);
+  if (ifWifi==true) {
+    textSize(24);
+    //fill(255, 0, 0);
+    fill(255);
+    text("live earthquakes", xc, height/16*10);
+    fill(240, 56, 10);
 
-  if (eqData.countHour !=0) {
-    if (eqData.countHour > 4) {
-      eqData.countHour = 4;
-    }
-    
-    for (int i = 0; i < eqData.countHour; i++) {
-      println(eqData.countHour);
-      textSize(16);
-      text(eqData.titleList.get(i), xc, height/16*(11+i*0.5));
-    }
-    
-    maxCounthour=eqData.countHour;
-  } else {
-    for (int i=0; i<maxCounthour; i++) {
-      textSize(18);
-      text(eqData.titleList.get(i), xc, height/16*(11+i*0.5));
+    if (eqData.countHour !=0) {
+      if (eqData.countHour > 4) {
+        eqData.countHour = 4;
+      }
+
+      for (int i = 0; i < eqData.countHour; i++) {
+        println(eqData.countHour);
+        textSize(16);
+        text(eqData.titleList.get(i), xc, height/16*(11+i*0.5));
+      }
+
+      maxCounthour=eqData.countHour;
+    } else {
+      for (int i=0; i<maxCounthour; i++) {
+        textSize(18);
+        text(eqData.titleList.get(i), xc, height/16*(11+i*0.5));
+      }
     }
   }
   // }
@@ -291,7 +300,7 @@ void realTimeUpdate() {
   //  *Update every one and half minute
   if ( millis() - lastTime >= 60000 ) {
     //  *Load all_hour data
-
+    ifNoInternet();
     eqData.init(hourURL);
     eqData.update(hour);
     println( "all_hour data updated!" );
@@ -305,6 +314,50 @@ void delay(int delay)
 {
   int time = millis();
   while (millis () - time <= delay);
+}
+
+
+void ifNoInternet() {
+
+  if (conectedToGeoJSON() == true) {
+    ifWifi=true;
+    println(" WiFi DETECTED. Switching to online mode");
+  } else {
+    //change the path
+    ifWifi=false;
+    println( " WiFi NOT DETECTED. Switching to offline mode");
+  }
+}
+
+public static boolean conectedToGeoJSON() {
+
+  try {
+    //make a url to a known source
+    java.net.URL url = new java.net.URL("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson");
+
+    //open connection to that source
+    java.net.HttpURLConnection urlConnect = (java.net.HttpURLConnection)url.openConnection();
+
+    //trying to retrieve data from the source. 
+    //if no connecton, this line will fail 
+
+    Object objData = urlConnect.getContent();
+  } 
+  catch (java.net.UnknownHostException e) {
+    // TODO Auto-generated catch block
+    e.printStackTrace();
+    println("Internet NOT available");
+    return false;
+  }
+  catch (IOException e) {
+    // TODO Auto-generated catch block
+    e.printStackTrace();
+    println("Internet NOT available");
+
+    return false;
+  }
+  println("Internet available");
+  return true;
 }
 
 /*

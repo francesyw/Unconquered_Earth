@@ -10,7 +10,7 @@ class eqAnimate {
   PVector drawPosS = new PVector(); // *position of the obj on surface
   PVector drawPosD = new PVector(); // *position of the obj inside the globe
   String title;
-
+  float magl;
   public void update() {   
     //////here!!!
     rS = globeR;
@@ -63,13 +63,15 @@ class eqAnimate {
 
     return(v);
   }
-
+/*
   void textForNew() {
-    String[] titleList=split(title, "-");
-    String[] titleList1=split(titleList[1], " of ");
+    //String[] titleList=split(title, "-");
+    //String[] titleList1=split(titleList[1], " of ");
     //String finalTitle=  titleList[0]+" / "+titleList1[0]+"  / "+titleList1[1];
-    String text1=titleList1[1];
-    String text2=titleList[0];
+   //String text1=titleList1[1];
+    //String text2=titleList[0];
+    String text1=title;
+    String text2="M- "+magl;
     pushMatrix();
     pushStyle();
     textAlign(CENTER, CENTER);
@@ -93,7 +95,7 @@ class eqAnimate {
     popStyle();
     popMatrix();
   }
-
+*/
   void draw3D(float t) {
 
     pushMatrix();
@@ -101,7 +103,7 @@ class eqAnimate {
     noFill();
     circle(t*10);
     hint(DISABLE_DEPTH_TEST);
-    textForNew();
+  // textForNew();
     hint(ENABLE_DEPTH_TEST);
     popMatrix();
   }

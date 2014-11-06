@@ -301,7 +301,8 @@ void setParameter(int i, int j) {
   eqAnimate.lon= eqData.lonList.get(j);
   eqAnimate.lat= eqData.latList.get(j);
   eqAnimate.rD = eqData.depthList.get(j);
-  eqAnimate.title=eqData.titleList.get(j);
+  //eqAnimate.magl= eqData.magList.get(j);
+  //eqAnimate.title=eqData.placeList.get(j);
   eqAnimate.update();
 }
 
