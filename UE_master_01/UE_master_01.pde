@@ -16,7 +16,7 @@ float globeRadius;
 float earthRadius = 6371.0; // *The mean value of the distance from Earth's surface to its center.
 int originalSize = 0;
 long lastTime;
-String monthURL = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
+String monthURL = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
 String hourURL = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
 
 JSONObject backupMonthUrl;
