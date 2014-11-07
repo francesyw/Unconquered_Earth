@@ -20,6 +20,7 @@ class eqData {
   long time;
   String place;
   String title;
+  boolean isHour = false;
 
   float mapLong;
   float mapLat;
@@ -102,7 +103,7 @@ class eqData {
       mapLong = map(longitude, -180.0, 180.0, -90.0, 270.0);
       mapLat = map(latitude, -90.0, 90.0, 0.0, 180.0);
       mapDepth = globeR - (globeR*depth/earthRadius);
-      //      mapMag = map(mag, 0, 7.5, 0.4, 1.5);    
+
       switch(dataFeeds) {
 
         // *For all_month data (only read once)
@@ -113,7 +114,6 @@ class eqData {
           lonList.add(countFilter, mapLong);
           depthList.add(countFilter, mapDepth);        
           magList.add(countFilter, mag);    
-          placeList.add(0, place); 
           titleList.add(0, title);      
           countFilter++;  
           // println(countFilter);
@@ -133,6 +133,8 @@ class eqData {
           titleList.add(0, title);
           magList.add(0, mag);
           countHour++;
+          isHour = true;
+//          println(longitude + " | " + latitude);
         }
         println("List Size: " + latList.size() + "  |  Count: " + countHour + "  |  Original Size: " + originalSize);
         // println(latList);

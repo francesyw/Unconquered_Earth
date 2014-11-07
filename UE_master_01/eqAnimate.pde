@@ -10,7 +10,7 @@ class eqAnimate {
   PVector drawPosS = new PVector(); // *position of the obj on surface
   PVector drawPosD = new PVector(); // *position of the obj inside the globe
   String title;
-  float magl;
+
   public void update() {   
     //////here!!!
     rS = globeR;
@@ -34,14 +34,17 @@ class eqAnimate {
     translate(drawPosS.x, drawPosS.y, drawPosS.z);
     rotateZ(radians(lon));
     rotateY(radians(lat));   
+
     switch (dataFeeds) {
     case 'H':
+      hint(DISABLE_DEPTH_TEST);
       pushMatrix();          
       rotateX(radians(180));
       rotateZ(radians(0));
       translate(0, 0, -1);
       draw3D(0.8);
       popMatrix();
+      hint(ENABLE_DEPTH_TEST);
       break;
     }
     popMatrix();
@@ -64,31 +67,31 @@ class eqAnimate {
   }
 
   void textForNew() {
-    //String[] titleList=split(title, "-");
-    //String[] titleList1=split(titleList[1], " of ");
+    String[] titleList=split(title, "-");
+    String[] titleList1=split(titleList[1], " of ");
     //String finalTitle=  titleList[0]+" / "+titleList1[0]+"  / "+titleList1[1];
-    //String text1=titleList1[1];
-    //String text2=titleList[0];
-    String text1=title;
-    String text2="M- "+magl;
+    String text1=titleList1[1];
+    String text2=titleList[0];
     pushMatrix();
     pushStyle();
     textAlign(CENTER, CENTER);
     noStroke();
     if (isHands == true || mousePressed == true) {
-      fill(253, 160, 85, 139);
+      fill(254, 56, 10, 200);
+      //fill(253,160,85,139);
     } else {
-      fill(253, 81, 53, 90);
+      fill(254, 56, 10, 200);
+      // fill(253, 81, 53, 90);
     }
 
     scale(0.1);
     textFont(font2);
-    translate(0, -109, 6);
+    translate(0, -110, 6);
     rotate(PI/2);
     rotateY(PI);
 
-    text(text1, 15, 0);
-    text(text2, 15, 15);
+    //text(text1, 15, 0);
+    //text(text2, 15, 15);
     popStyle();
     popMatrix();
   }
@@ -99,19 +102,19 @@ class eqAnimate {
     translate(0, 0, t);
     noFill();
     circle(t*10);
-    hint(DISABLE_DEPTH_TEST);
-    textForNew();
-    hint(ENABLE_DEPTH_TEST);
+//    textForNew();
     popMatrix();
   }
 
   void circle(float r) {
     float plus=0;
-    for (int i=2;i<r+1;i++) {
+    for (int i=2; i<r+1; i++) {
 
       plus=frameCount/2;
-      strokeWeight(0.7);
-      stroke(230, 87, 54, 60);
+      strokeWeight(1.5);
+      // stroke(230, 87, 54, 60);
+      stroke(244, 85, 78, 35);
+
       ellipse(0, 0, (i+plus)%9, (i+plus)%9);
     }
   }

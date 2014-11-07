@@ -1,0 +1,221 @@
+{
+  "bbox": [
+    -120.0928,
+    13.6135,
+    0,
+    -90.6545,
+    41.9524,
+    73.95
+  ],
+  "features": [
+    {
+      "id": "nn00466580",
+      "properties": {
+        "detail": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/nn00466580.geojson",
+        "type": "earthquake",
+        "net": "nn",
+        "tsunami": null,
+        "sources": ",nn,",
+        "title": "M 0.4 - 52km NNW of Pahrump, Nevada",
+        "time": 1415326320070,
+        "updated": 1415326409088,
+        "mag": 0.38,
+        "place": "52km NNW of Pahrump, Nevada",
+        "types": ",general-link,geoserve,nearby-cities,origin,phase-data,",
+        "status": "automatic",
+        "alert": null,
+        "ids": ",nn00466580,",
+        "rms": null,
+        "code": "00466580",
+        "url": "http://earthquake.usgs.gov/earthquakes/eventpage/nn00466580",
+        "magType": "ml",
+        "mmi": null,
+        "cdi": null,
+        "tz": -480,
+        "felt": null,
+        "nst": 6,
+        "dmin": 0.213,
+        "sig": 2,
+        "gap": 100
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.2647,
+          36.6257,
+          73.95
+        ]
+      }
+    },
+    {
+      "id": "usc000sv8v",
+      "properties": {
+        "detail": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/usc000sv8v.geojson",
+        "type": "earthquake",
+        "net": "us",
+        "tsunami": null,
+        "sources": ",us,",
+        "title": "M 5.4 - 35km S of Iztapa, Guatemala",
+        "time": 1415325560510,
+        "updated": 1415327362434,
+        "mag": 5.4,
+        "place": "35km S of Iztapa, Guatemala",
+        "types": ",cap,dyfi,general-link,geoserve,nearby-cities,origin,phase-data,tectonic-summary,",
+        "status": "reviewed",
+        "alert": null,
+        "ids": ",usc000sv8v,",
+        "rms": 0.56,
+        "code": "c000sv8v",
+        "url": "http://earthquake.usgs.gov/earthquakes/eventpage/usc000sv8v",
+        "magType": "mb",
+        "mmi": null,
+        "cdi": 4.3,
+        "tz": -360,
+        "felt": 26,
+        "nst": null,
+        "dmin": 1.356,
+        "sig": 460,
+        "gap": 106
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.6545,
+          13.6135,
+          69.76
+        ]
+      }
+    },
+    {
+      "id": "nn00466569",
+      "properties": {
+        "detail": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/nn00466569.geojson",
+        "type": "earthquake",
+        "net": "nn",
+        "tsunami": null,
+        "sources": ",nn,uw,",
+        "title": "M 3.6 - 66km ESE of Lakeview, Oregon",
+        "time": 1415325071097,
+        "updated": 1415327029557,
+        "mag": 3.62,
+        "place": "66km ESE of Lakeview, Oregon",
+        "types": ",cap,dyfi,general-link,geoserve,nearby-cities,origin,phase-data,shakemap,",
+        "status": "reviewed",
+        "alert": null,
+        "ids": ",nn00466569,uw60919531,",
+        "rms": 0.0889,
+        "code": "00466569",
+        "url": "http://earthquake.usgs.gov/earthquakes/eventpage/nn00466569",
+        "magType": "ml",
+        "mmi": 3.47,
+        "cdi": 1,
+        "tz": -480,
+        "felt": 0,
+        "nst": 6,
+        "dmin": 0.621,
+        "sig": 202,
+        "gap": 150.04
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.608,
+          41.9524,
+          0
+        ]
+      }
+    },
+    {
+      "id": "nn00466565",
+      "properties": {
+        "detail": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/nn00466565.geojson",
+        "type": "earthquake",
+        "net": "nn",
+        "tsunami": null,
+        "sources": ",nn,",
+        "title": "M 2.3 - 69km WNW of Gerlach-Empire, Nevada",
+        "time": 1415324683870,
+        "updated": 1415324862981,
+        "mag": 2.25,
+        "place": "69km WNW of Gerlach-Empire, Nevada",
+        "types": ",general-link,geoserve,nearby-cities,origin,phase-data,",
+        "status": "automatic",
+        "alert": null,
+        "ids": ",nn00466565,",
+        "rms": null,
+        "code": "00466565",
+        "url": "http://earthquake.usgs.gov/earthquakes/eventpage/nn00466565",
+        "magType": "ml",
+        "mmi": null,
+        "cdi": null,
+        "tz": -480,
+        "felt": null,
+        "nst": 15,
+        "dmin": 0.676,
+        "sig": 0,
+        "gap": 292.16
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.0928,
+          40.8982,
+          1.25
+        ]
+      }
+    },
+    {
+      "id": "ci37285704",
+      "properties": {
+        "detail": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/ci37285704.geojson",
+        "type": "earthquake",
+        "net": "ci",
+        "tsunami": null,
+        "sources": ",ci,",
+        "title": "M 0.2 - 8km N of Anza, California",
+        "time": 1415323934400,
+        "updated": 1415324201650,
+        "mag": 0.2,
+        "place": "8km N of Anza, California",
+        "types": ",general-link,geoserve,nearby-cities,origin,phase-data,scitech-link,",
+        "status": "automatic",
+        "alert": null,
+        "ids": ",ci37285704,",
+        "rms": 0.24,
+        "code": "37285704",
+        "url": "http://earthquake.usgs.gov/earthquakes/eventpage/ci37285704",
+        "magType": "ml",
+        "mmi": null,
+        "cdi": null,
+        "tz": -480,
+        "felt": null,
+        "nst": 16,
+        "dmin": 0.05455,
+        "sig": 1,
+        "gap": 109
+      },
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.6625,
+          33.6273333,
+          16.14
+        ]
+      }
+    }
+  ],
+  "type": "FeatureCollection",
+  "metadata": {
+    "title": "USGS All Earthquakes, Past Hour",
+    "count": 5,
+    "status": 200,
+    "generated": 1415327461000,
+    "api": "1.0.13",
+    "url": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson"
+  }
+}

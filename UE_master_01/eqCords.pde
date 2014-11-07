@@ -1,5 +1,3 @@
-//import java.util.*;
-
 class eqCords {
 
   float lon;
@@ -19,6 +17,8 @@ class eqCords {
   float currentCenterLat;
   float r_mapY_b;
   int r_mapY_a;
+  long lastTimeRotate;
+  
   float destrRawLon;
   float destrRawLat;
   String destrName;
@@ -30,7 +30,7 @@ class eqCords {
   String destrHomeless;
   String destrINFO;
   String destrDATA;
-  
+
   ArrayList<Float> drawSize = new ArrayList<Float>();
   ArrayList<Float> drawRawLon = new ArrayList<Float>();
   ArrayList<Float> drawRawLat = new ArrayList<Float>();
@@ -40,6 +40,7 @@ class eqCords {
   int index;
 
   int ii;
+    
   public void update() {   
     rS = globeR;
     // *Generate the vector of the obj on the surface
@@ -71,18 +72,18 @@ class eqCords {
     case 'M' :           
       stroke(164, 246, 7, 0);
       fill(9, 250, 9, 255);
-//      triangle(1, 1, 1, 0, 0, 1);
-      ellipse(0,0,0.7,0.7);
+      ellipse(0, 0, 0.7, 0.7);
       break;
 
     case 'H' : 
-      hint(ENABLE_DEPTH_TEST);
+      hint(DISABLE_DEPTH_TEST);
       pushMatrix();          
       rotateX(radians(180));
       rotateZ(radians(0));
       translate(0, 0, -2);
       draw3Dhour(0.5);
       popMatrix();
+      hint(ENABLE_DEPTH_TEST);
       break; 
 
     case 'D' :
@@ -104,81 +105,117 @@ class eqCords {
 
       if (destrRawLon > (centerLon-5) && destrRawLon < (centerLon+8) && destrRawLat > (centerLat-8) && destrRawLat < (centerLat+8)) {
         pushMatrix();
-        translate(0,0,-5);
+        translate(0, 0, -5);
         if (!drawRawLon.contains(destrRawLon)) {
           drawRawLon.add(destrRawLon);
-          drawSize.add(1.5);
+          drawSize.add(2.1);
           //              println(" RawLon: "+drawRawLon.get(drawRawLon.size()-1)+" | "+drawSize.size()+" objs");
         } else if (destrRawLon > (centerLon-5) && destrRawLon < (centerLon+5)) {                    
 
-            if (!textOnce) {
-              index = int(random(drawRawLon.size()));            
-              triggerEvent = drawRawLon.get(index);
-              leapC.triggerEvent = triggerEvent;
-              currentCenterLon = centerLon;
-              currentCenterLat = centerLat;
-              textOnce = true;
-            }
+          if (!textOnce) {
+            index = int(random(drawRawLon.size()));            
+            triggerEvent = drawRawLon.get(index);
+            leapC.triggerEvent = triggerEvent;
+            currentCenterLon = centerLon;
+            currentCenterLat = centerLat;
+            textOnce = true;
+          }
 
-            if (abs(centerLon - currentCenterLon) > 2 || abs(centerLat - currentCenterLat) > 2) {
-              textOnce = false;
-            }
-            
-            if (destrRawLon == triggerEvent) {
-              draw3D(4.5);
-              
-              //                hint(DISABLE_DEPTH_TEST);            
-              pushStyle();
-              pushMatrix();
-              translate(0,0,-7);
-              rotateX(radians(180));
-              rotateY(radians(0));
-              rotateZ(radians(90));
-              noStroke();
-              rectMode(CENTER);
-              fill(0, 170);
-//              rect(0, 0, 302, 13);
-              fill(129, 228, 232, 217);
-              textFont(font);
-              textSize(1.5);
-              textAlign(RIGHT);
-              textLeading(3);
-              text(destrName+", "+destrCountry+"\n"+destrYear+"\n"+"Magnitude "+destrMag, -8, -2, 2);
-              textAlign(LEFT);
-              text(destrKilled+" killed"+"\n"+destrInjured+" injured"+"\n"+destrHomeless+" homeless", 9, -2, 2);
-              popMatrix();
-              popStyle();
-              //                hint(ENABLE_DEPTH_TEST);
-            } else {
-              draw3D(1.5);
-            }
+          if (abs(centerLon - currentCenterLon) > 2 || abs(centerLat - currentCenterLat) > 2) {
+            textOnce = false;
+          }
 
-            sizeIndex = drawRawLon.indexOf(destrRawLon);
-            drawSize.set(sizeIndex, lerp(drawSize.get(sizeIndex), 4.0, 1.5));         
-            draw3D(drawSize.get(sizeIndex));
-            hint(DISABLE_DEPTH_TEST); 
+          if (destrRawLon == triggerEvent) {
+            draw3D(11.5);
+
+            //                hint(DISABLE_DEPTH_TEST);            
             pushStyle();
             pushMatrix();
-            translate(0, 0, -1); 
+            translate(0, 0, -7);
             rotateX(radians(180));
             rotateY(radians(0));
             rotateZ(radians(90));
+
+
+            //---//  "Selection" data visuals //---//
+            // Hover over to view more info 
+            //(commented out old code)
+
+
+            // rectMode(CENTER);
+            // fill(0, 180);
+            // stroke(0, 255, 255);
+
+            // rect(0, 0, 302, 13);
+            // rect(0,10, 51, 17);
+            // fill(129, 228, 232, 217);
+            // blue fill 
             fill(255, 255, 255, 255);
-            noStroke();
-            textFont(font);
+            //white fill
+            //fill(0, 234, 250, 120);
+
+            textFont(font2);
+            // textSize(1.5);
+            textSize(5.0);
+            //textAlign(RIGHT);
+            textAlign(LEFT);
+            //textLeading(3);
+            textLeading(9);
+            //text(destrName+", "+destrCountry+"\n"+destrYear+"\n"+"Magnitude "+destrMag, -8, -2, 2);
+
+            // Line #1 = name of place
+
+            text(destrName, 4, 0, 3);
+            textSize(3.5);
+
+            // Line #2 = name of Country
+
+            //text(destrKilled+" killed"+"\n"+destrInjured+" injured"+"\n"+destrHomeless+" homeless", 9, -2, 2);
+            text(destrCountry, 4, 4, 2);
+
+            //Line #3 = magnitude size
+
+            fill(255, 255);
             textAlign(CENTER);
-            textSize(2.0);
-            //
-            fill(255);
-            text(destrName, 0, 0, 10);
+            textSize(6.5);
+            text(destrMag, -8, 2, 1.5);
             popMatrix();
             popStyle();
-            hint(ENABLE_DEPTH_TEST);
-            
+            //                hint(ENABLE_DEPTH_TEST);
+          } else {
+            draw3D(2.5);
+          }
+          //on this line now.
+
+          sizeIndex = drawRawLon.indexOf(destrRawLon);
+          drawSize.set(sizeIndex, lerp(drawSize.get(sizeIndex), 2.3, 0.8));  
+          //put this back after testing      
+
+          draw3D(drawSize.get(sizeIndex));
+          hint(DISABLE_DEPTH_TEST); 
+          pushStyle();
+          pushMatrix();
+          translate(0, 0, -1); 
+          rotateX(radians(180));
+          rotateY(radians(0));
+          rotateZ(radians(90));
+          fill(255, 255, 255, 255);
+          noStroke();
+          textFont(font2);
+          //textAlign(CENTER);
+          //textSize(2.0);
+
+          // fill(255);
+          //hover over to small name (not needed anymore)
+          //text(destrName, 0, 0, 10);
+
+          popMatrix();
+          popStyle();
+          hint(ENABLE_DEPTH_TEST);
         } else if (destrRawLon >= (centerLon+5)) {
           sizeIndex = drawRawLon.indexOf(destrRawLon);
-          drawSize.set(sizeIndex, lerp(drawSize.get(sizeIndex), 1.5, 0.1));         
-          draw3D(drawSize.get(sizeIndex));
+          drawSize.set(sizeIndex, lerp(drawSize.get(sizeIndex), 2.0, 0.1));         
+          // draw3D(drawSize.get(sizeIndex));
         }
         popMatrix();
       } else {
@@ -186,8 +223,10 @@ class eqCords {
         if (drawRawLon.remove(destrRawLon)) {            
           drawSize.remove(0);
         }
-        draw3D(1.5);
-        
+
+        // determines default size of the markers
+        //keep this one
+        draw3D(1.8);
       }
 
       popMatrix();
@@ -219,74 +258,90 @@ class eqCords {
   }
 
   void draw3D(float t) {
-    fill(250, 159, 1, 130);
+    //---// This fills the destruction markers //---//
+
     pushMatrix();
-    stroke(254, 151, 4, 255);
+    //---// These are the destruction 3d markers //---//
+    fill(0, 234, 250, 120);
+    stroke(5, 240, 250, 255);
     rotate(PI/4);
-    //  ellipse(0,0,0.1,0.1);
-    rect(0, 0, 1.3, 1.3);
-    //    ellipse(0, 0, 1.5, 1.5);
-//    triangle (-1,-1,2,0,0,2);
-
+    rect(0, 0, t, t);
     popMatrix();
-/*
-    stroke(2, 252, 214, 50);
 
-    beginShape(TRIANGLES);
-
-    fill(16, 49, 154, 255);
-    vertex(-t, -t, -t);
-    vertex( t, -t, -t);
-    vertex( 0, 0, t*2);
-
-    fill(16, 241, 154, 255);
-    vertex( t, -t, -t);
-    vertex( t, t, -t);
-    vertex( 0, 0, t*2);
-
-    fill(27, 200, 255, 255);
-    vertex( t, t, -t);
-    vertex(-t, t, -t);
-    vertex( 0, 0, t*2);
-
-    fill(75, 25, 250, 255);
-    vertex(-t, t, -t);
-    vertex(-t, -t, -t);
-    vertex( 0, 0, t*2);
-
-    endShape();
-*/
+    /*
+    if (destrRawLon == triggerEvent) {
+     pushMatrix();
+     stroke(2, 252, 214, 50);
+     
+     beginShape(TRIANGLES);
+     
+     fill(16, 49, 154, 255);
+     vertex(-t, -t, -t);
+     vertex( t, -t, -t);
+     vertex( 0, 0, t*2);
+     
+     fill(16, 241, 154, 255);
+     vertex( t, -t, -t);
+     vertex( t, t, -t);
+     vertex( 0, 0, t*2);
+     
+     fill(27, 200, 255, 255);
+     vertex( t, t, -t);
+     vertex(-t, t, -t);
+     vertex( 0, 0, t*2);
+     
+     fill(75, 25, 250, 255);
+     vertex(-t, t, -t);
+     vertex(-t, -t, -t);
+     vertex( 0, 0, t*2);
+     
+     endShape();
+     popMatrix();
+     }
+     */
   }
   void draw3Dhour(float t) {
 
-    stroke(255, 73, 1, 255);
+    //---// This draws the hour Markers //---//
+    //stroke(255, 73, 1, 255);
+    stroke(245, 22, 0, 255);
 
     beginShape(TRIANGLES);
 
-//    fill(251, 247, 243, 255);
+    //    fill(251, 247, 243, 255);
     noFill();
 
     vertex(-t, -t, -t);
     vertex( t, -t, -t);
     vertex( 0, 0, t*1);
 
-//    fill(251, 123, 45, 255);
+    //    fill(251, 123, 45, 255);
     vertex( t, -t, -t);
     vertex( t, t, -t);
     vertex( 0, 0, t*2);
 
-//    fill(246, 157, 122, 255);
+    //    fill(246, 157, 122, 255);
     vertex( t, t, -t);
     vertex(-t, t, -t);
     vertex( 0, 0, t*1);
 
-//    fill(254, 253, 253, 255);
+    //    fill(254, 253, 253, 255);
     vertex(-t, t, -t);
     vertex(-t, -t, -t);
     vertex( 0, 0, t*2);
 
     endShape();
-
+  }
+  
+  void selfRotateHour() {
+    if (eqData.isHour == true) {
+      r_mapY=lerp(r_mapY, (-90-eqData.longitude), 0.1);
+      println(r_mapY);
+      if (millis()-lastTimeRotate > 5000) {
+        eqData.isHour = false;
+      }
+    }
+    
   }
 }
 

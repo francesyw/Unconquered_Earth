@@ -1,10 +1,13 @@
 import codeanticode.syphon.*;
 import de.voidplus.leapmotion.*;
 import java.text.*;
+import java.net.URL.*;
+import java.io.*;
+import java.net.MalformedURLException;
 import processing.opengl.*;
 
-int screenWidth = 1280;
-int screenHeight = 720;
+int screenWidth = 1024;
+int screenHeight = 768;
 int sDetail = 30;  // *Sphere resolution
 float r_mapY = 0; // globe - rotation Y 
 float r_mapX = 0; // globe - rotation X
@@ -13,11 +16,15 @@ float globeRadius;
 float earthRadius = 6371.0; // *The mean value of the distance from Earth's surface to its center.
 int originalSize = 0;
 long lastTime;
-String monthURL = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
+String monthURL = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
 String hourURL = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
+
+JSONObject backupMonthUrl;
+JSONObject backupHourUrl;
+
 char month = 'M';
 char hour = 'H';
-boolean isHour = false;
+
 
 PImage texMap;
 PImage texMap2;
@@ -38,6 +45,10 @@ int maxCount=1;
 
 int ii=0;
 
+PShape dateIcon, deathIcon, homelessIcon, injIcon, magIcon;
+
+PImage tohokuBackground;
+
 SyphonServer server;
 
 LeapMotion leap;
@@ -45,7 +56,6 @@ leapControl leapC;
 eqData eqData;
 eqCords eqCords;
 Earth earth;
-//Set0 set0;
 OSC osc;
 eqAnimate eqAnimate;
 
@@ -54,16 +64,29 @@ eqAnimate eqAnimate;
 void setup() {
   size(screenWidth, screenHeight, P3D);
 
-//  frame.setLocation(1280, 0);
-//  frame.setAlwaysOnTop(false);
+  //  frame.setLocation(1280, 0);
+  //  frame.setAlwaysOnTop(false);
 
   lastTime = millis();
 
   texMap = loadImage("noinvert.png");
-  texMap2 = loadImage("invert.png");
-  back = loadImage("back2.png");
-//  back2 = loadImage("back3.png");
+  texMap2 = loadImage("invert2.png");
+  back = loadImage("back3.png");
+  //  back2 = loadImage("back3.png");
   glow = loadImage("glow.png");
+
+  //test background
+//  tohokuBackground = loadImage("71_Tohoku.jpg");
+
+  //****NEW****//
+
+  //loading dataIcons here
+  dateIcon = loadShape("date.svg");
+  deathIcon= loadShape("dead.svg");
+  homelessIcon= loadShape("homeless.svg");
+  injIcon= loadShape("injured.svg");
+  magIcon= loadShape("magnitude.svg");
+
   earth = new Earth();
   earth.initializeSphere(sDetail);    
 
@@ -71,12 +94,13 @@ void setup() {
   eqCords = new eqCords();
   eqAnimate=new eqAnimate();
   //*Load the all_month data at the first time the program's running
+
+  //check internet before loading strings. 
+  ifNoInternet(); 
+
   eqData.init(monthURL);
   eqData.update(month);
   originalSize = eqData.latList.size();
-
-//  set0 = new Set0();
-//  set0.init();
 
   println("count all: " + eqData.count);
   println("latList size: " + eqData.latList.size());
@@ -90,11 +114,11 @@ void setup() {
 
   //  uiText=new uiText();
   font = loadFont("HelveticaNeue-UltraLight-200.vlw");
-  font2 = createFont("HelveticaNeue-Medium-48.vlw", 16, true);
+  font2 = createFont("Roboto-Medium", 48, true);
 
-//  background(0);
+//  background(255);
   smooth();
-  
+
   // Create syhpon server to send frames out.
   server = new SyphonServer(this, "Processing Globe");
 }
@@ -103,32 +127,40 @@ void setup() {
 //===================================================
 
 void draw() {
-  
+//  pushMatrix();
+//  tint(43, 87, 128, 255);
+//  image(tohokuBackground, width/2, height/2);
+//  //slowly clears background for "drag" effect"
+//  // fill(255,12);
+//  // rect(-1, -1, width+2, height+2);
+//
+//  popMatrix();
+
   noHands();
-  
+
   //background circle clears only
   globeRadius = 1;
-//if (leapC.isZoom == true ||keyPressed && key == 'z'){
-  fill(0,255);
-//  rect(-2,-2,width+2,height+2);
-//} else {
-  tint(0, 0, 0, 225);
-  
-//}
-  fill(0, 18);
-//  rect(-1, -1, width+2, height+2);
+  //if (leapC.isZoom == true ||keyPressed && key == 'z'){
+  fill(0, 255);
+  //  rect(-2,-2,width+2,height+2);
+  //} else {
+  //  tint(255, 225);
+
+  //}
+
   hint(DISABLE_DEPTH_TEST);
   imageMode(CENTER);
 
   realTimeUpdate();  // *Update the data every one and half minute.
 
   pushMatrix();
-  image(back, width/2, height/2, 630, 630);
+  tint(254, 200);
+  image(back, width/2, height/2, 590, 590);
   translate(width/2, height/2, 300);
-  
-//  rotateX(radians(0.0));
-//  rotateY(radians(0.0));
-//  rotateZ(radians(-35.5));
+
+  //  rotateX(radians(0.0));
+  //  rotateY(radians(0.0));
+  //  rotateZ(radians(-35.5));
   lights();
 
   pushMatrix();
@@ -139,9 +171,10 @@ void draw() {
 
   //--------------Main Globe----------------//
   scale(1.49);
-  renderGlobe(169, 227, texMap2); 
+  renderGlobe(142, 230, texMap2);       
+
   hint(ENABLE_DEPTH_TEST);
-  renderGlobe(151, 210, texMap2);      
+  renderGlobe(172, 221, texMap2);  
 
   addEqEvent(); // *draw event objects.
 
@@ -152,7 +185,7 @@ void draw() {
   //Leap Motion ==========
   isHands = leap.hasHands();
   // HANDS
-  for (Hand hand : leap.getHands()) {
+  for (Hand hand : leap.getHands ()) {
     hand_position    = hand.getStabilizedPosition();
     hand_roll        = hand.getRoll();
     num_finger       = hand.countFingers();
@@ -160,7 +193,7 @@ void draw() {
     leapC.isOneFinger();
 
     // FINGERS
-    for (Finger finger : hand.getFingers()) {      
+    for (Finger finger : hand.getFingers ()) {      
       finger_velocity   = finger.getVelocity();
     }
 
@@ -169,19 +202,21 @@ void draw() {
     handsLastTime = millis();
   }
 
-//  leapC.zoomGlobe();
+  //  leapC.zoomGlobe();
+
+  //if hands present, rotate globe auto
 
   if (!isHands) {     
     r_mapY += 0.2;
-//    if ( millis() - handsLastTime >= 5000 ) {
-//      leapC.zoomGlobe = 'O';
-//      leapC.zoomGlobe();
-//      handsLastTime = millis();
-//    }
+    //    if ( millis() - handsLastTime >= 5000 ) {
+    //      leapC.zoomGlobe = 'O';
+    //      leapC.zoomGlobe();
+    //      handsLastTime = millis();
+    //    }
   }
-  
+
   server.sendScreen();
-//  println(frameRate);
+  //  println(frameRate);
 }
 
 
@@ -193,13 +228,13 @@ int maxCounthour=1;
 
 void addEqEvent() {
   int j;
-  for (int i = eqData.countHour; i < eqData.latList.size(); i++) { 
+  for (int i = eqData.countHour; i < eqData.latList.size (); i++) { 
     setParameter(i, 0);        
     eqCords.render(month);
   }
   if (eqData.countHour != 0) {
-    for (j=0;j<eqData.countHour;j++) {
-      for (int i = 0; i < eqData.latList.size() - originalSize; i++) {
+    for (j=0; j<eqData.countHour; j++) {
+      for (int i = 0; i < eqData.latList.size () - originalSize; i++) {
         setParameter(i, j);
         eqCords.render(hour);
         eqAnimate.render(hour);
@@ -210,7 +245,7 @@ void addEqEvent() {
 
     for (j = 0; j < maxCounthour; j++) {
 
-      for (int i = 0; i < eqData.latList.size() - originalSize; i++) {
+      for (int i = 0; i < eqData.latList.size () - originalSize; i++) {
         setParameter(i, j);
         eqCords.render(hour);
         eqAnimate.render(hour);
@@ -247,32 +282,40 @@ void setParameter(int i, int j) {
   eqAnimate.lon= eqData.lonList.get(j);
   eqAnimate.lat= eqData.latList.get(j);
   eqAnimate.rD = eqData.depthList.get(j);
-  eqAnimate.magl= eqData.magList.get(j);
-  eqAnimate.title=eqData.placeList.get(j);
+  eqAnimate.title=eqData.titleList.get(j);
   eqAnimate.update();
 }
 
 
 
 void realTimeUpdate() {
+
   //  *Update every one and half minute
   if ( millis() - lastTime >= 60000 ) {
+
+    // checks to see if there is internet
+    // place before it loads 
+    ifNoInternet();
+    println(hourURL);
     //  *Load all_hour data
     eqData.init(hourURL);
+    // run the "H" index for hour.
     eqData.update(hour);
     println( "all_hour data updated!" );
 
     pushMatrix();
     tint(254, 255);
     image(glow, width/2, height/2, 600, 600);
-
     popMatrix();
-
-    isHour = true;
-
+    
     lastTime = millis();
+    eqCords.lastTimeRotate = millis();
+    
     isNew = true;
+    
   }
+  eqCords.selfRotateHour();
+
 }
 
 
@@ -289,11 +332,10 @@ void renderGlobe(int tint, int tintAlpha, PImage image) {
       ii = 100;
     }
     fill(0.60*ii, 1.80*ii, 2.55*ii, 212);
-  } 
-  else {
+  } else {
     ii=0;
   }
-  
+
   // ii = 0;
   textureMode(IMAGE);  
   //*calls the img.
@@ -304,13 +346,13 @@ void renderGlobe(int tint, int tintAlpha, PImage image) {
 
 /*
 void init() {
-  frame.dispose();
-  frame.setUndecorated(true); // works.
-  //frame.removeNotify();
-  //call PApplet.init() to take care of business
-  super.init();
-} 
-*/
+ frame.dispose();
+ frame.setUndecorated(true); // works.
+ //frame.removeNotify();
+ //call PApplet.init() to take care of business
+ super.init();
+ } 
+ */
 
 void noHands() {
   if (isHands == false) {
@@ -322,7 +364,6 @@ void noHands() {
     if (keyPressed && key == 'z') {
       leapC.zoomGlobe = 'I';
     }
-    
   }
 }
 
@@ -342,5 +383,59 @@ void leapOnDisconnect() {
 }
 void leapOnExit() {
   // println("Leap Motion Exit");
+}
+
+void ifNoInternet() {
+
+  if (conectedToGeoJSON() == true) {
+    //run this code (backup the data)
+    saveJSONObject(loadJSONObject(hourURL), "data/backupHourUrl.json");
+    //and switch to the local file directory
+    hourURL = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
+    monthURL = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
+    println(" WiFi DETECTED. Switching to web");
+  } else {
+    //change the path
+    hourURL = "data/backupHourUrl.json";
+    monthURL = "data/backupMonthUrl.json";
+    println( " WiFi NOT DETECTED. Switching to backup files");
+  }
+}
+
+
+
+
+// checks to see if internet is available
+// then creates a boolean.
+
+public static boolean conectedToGeoJSON() {
+
+  try {
+    //make a url to a known source
+    java.net.URL url = new java.net.URL("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson");
+
+    //open connection to that source
+    java.net.HttpURLConnection urlConnect = (java.net.HttpURLConnection)url.openConnection();
+
+    //trying to retrieve data from the source. 
+    //if no connecton, this line will fail 
+
+    Object objData = urlConnect.getContent();
+  } 
+  catch (java.net.UnknownHostException e) {
+    // TODO Auto-generated catch block
+    e.printStackTrace();
+    println("Internet NOT available");
+    return false;
+  }
+  catch (IOException e) {
+    // TODO Auto-generated catch block
+    e.printStackTrace();
+    println("Internet NOT available");
+
+    return false;
+  }
+  println("Internet available");
+  return true;
 }
 
