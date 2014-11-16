@@ -1,100 +1,11 @@
 {
-  "bbox": [
-    -155.1263,
-    19.3485,
-    7.9,
-    -114.9647,
-    37.3188,
-    8
-  ],
-  "features": [
-    {
-      "id": "hv60798821",
-      "properties": {
-        "detail": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/hv60798821.geojson",
-        "type": "earthquake",
-        "net": "hv",
-        "tsunami": null,
-        "sources": ",hv,",
-        "title": "M 1.8 - 14km SE of Volcano, Hawaii",
-        "time": 1415298866100,
-        "updated": 1415299069292,
-        "mag": 1.8,
-        "place": "14km SE of Volcano, Hawaii",
-        "types": ",general-link,geoserve,nearby-cities,origin,",
-        "status": "AUTOMATIC",
-        "alert": null,
-        "ids": ",hv60798821,",
-        "rms": 0.24,
-        "code": "60798821",
-        "url": "http://earthquake.usgs.gov/earthquakes/eventpage/hv60798821",
-        "magType": "Md",
-        "mmi": null,
-        "cdi": null,
-        "tz": -600,
-        "felt": null,
-        "nst": null,
-        "dmin": 0.03593261,
-        "sig": 50,
-        "gap": 205.2
-      },
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -155.1263,
-          19.3485,
-          7.9
-        ]
-      }
-    },
-    {
-      "id": "nn00466502",
-      "properties": {
-        "detail": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/nn00466502.geojson",
-        "type": "earthquake",
-        "net": "nn",
-        "tsunami": null,
-        "sources": ",nn,",
-        "title": "M 1.6 - 18km ESE of Alamo, Nevada",
-        "time": 1415297638750,
-        "updated": 1415297762270,
-        "mag": 1.59,
-        "place": "18km ESE of Alamo, Nevada",
-        "types": ",general-link,geoserve,nearby-cities,origin,phase-data,",
-        "status": "automatic",
-        "alert": null,
-        "ids": ",nn00466502,",
-        "rms": null,
-        "code": "00466502",
-        "url": "http://earthquake.usgs.gov/earthquakes/eventpage/nn00466502",
-        "magType": "ml",
-        "mmi": null,
-        "cdi": null,
-        "tz": -480,
-        "felt": null,
-        "nst": 9,
-        "dmin": 0.911,
-        "sig": 39,
-        "gap": 266.66
-      },
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -114.9647,
-          37.3188,
-          8
-        ]
-      }
-    }
-  ],
+  "features": [],
   "type": "FeatureCollection",
   "metadata": {
     "title": "USGS All Earthquakes, Past Hour",
-    "count": 2,
+    "count": 0,
     "status": 200,
-    "generated": 1415300116000,
+    "generated": 1415335126000,
     "api": "1.0.13",
     "url": "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson"
   }
