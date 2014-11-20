@@ -39,6 +39,8 @@ int events=0;
 int rand=0;
 int temp=0;
 color c=color(10, 60, 140, 80);
+
+
 void setup() {
   size(1280, 720, P3D);
   //  map=loadImage("2_Caracas.jpg");
@@ -152,6 +154,7 @@ void ifif() {
 void selectGlitch() {
 
   switch(switchNum) {
+    
   case 0:
     x1 = (int) random(0, width);
     y1 = 0;
@@ -164,6 +167,8 @@ void selectGlitch() {
     //int h = height/2;//try random?
     h= height;
     break;
+    
+    
   case 1:
     x1 = (int) random(0, width);
     // int y1 = 0;
@@ -237,30 +242,39 @@ void texts() {
   text(finalText.get(5), textLoc, pngLocY*6.4);
   popStyle();
   //==============================
+  
+  //=====/ display live earthquakes /====//
   if (ifWifi==true) {
     textSize(24);
     //fill(255, 0, 0);
     fill(255);
 
-    text("live earthquakes", textLoc, height/16*10);
+    text("live earthquakes", textLoc, height/16*10.1);
     fill(240, 56, 10);
 
     if (eqData.countHour !=0) {
       if (eqData.countHour > 4) {
         eqData.countHour = 4;
       }
-      textSize(14);
+      
       textFont(robotoMedium);
+      textSize(14);
       for (int i = 0; i < eqData.countHour; i++) {
         // println(eqData.countHour);
-        textSize(14);
         text(eqData.titleList.get(i), textLoc+15, height/16*(11+i*0.5));
       }
 
       maxCounthour=eqData.countHour;
     } else {
+      
+      //else is "if there are no live earthquakes//
       for (int i=0; i<maxCounthour; i++) {
+        textFont(robotoMedium);
+        fill(125,255);
+        //declare size after textfont, because it defaults to 72
         textSize(14);
+        
+        
         // triangle(xc, height/16*(11+i*0.5), xc-4, xc+4, xc+4, xc+5);
         text(eqData.titleList.get(i), textLoc, height/16*(11+i*0.5));
       }
