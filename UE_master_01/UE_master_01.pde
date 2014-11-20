@@ -202,17 +202,8 @@ void draw() {
     handsLastTime = millis();
   }
 
-  //  leapC.zoomGlobe();
-
-  //if hands present, rotate globe auto
-
   if (!isHands) {     
     r_mapY += 0.2;
-    //    if ( millis() - handsLastTime >= 5000 ) {
-    //      leapC.zoomGlobe = 'O';
-    //      leapC.zoomGlobe();
-    //      handsLastTime = millis();
-    //    }
   }
 
   server.sendScreen();

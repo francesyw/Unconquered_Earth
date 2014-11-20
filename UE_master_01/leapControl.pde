@@ -23,7 +23,7 @@ class leapControl {
   void handControl() {
 
     //--HANDS controlling the globe    
-    if (hand_position.z >= 30) {
+//    if (hand_position.z >= 30) {
       // println("hand_position.y: "+hand_position.y);
       if (hand_position.x <= 1200.0 && hand_position.x >= 100.0) {
 
@@ -37,7 +37,7 @@ class leapControl {
           r_mapY = map(hand_position.x, 100.0, 1200.0, r_yStart, r_yStart+270);
 
           //--Rotate the globe up-down
-          r_mapX = map(hand_roll, 38, -37, 40, -50);  
+          r_mapX = map(hand_position.y, 400, 600, 40, -50);  
 
           //--Limit the rotationX range
           if (r_mapX < -50.0) {
@@ -51,7 +51,7 @@ class leapControl {
         } else {
 //          println(hand_position.y);
           //--Use one finger to trigger the event  
-          if (hand_position.y < 500 && hand_position.y > 120 && !osc_trigger) {
+          if (hand_position.y < 650 && hand_position.y > 120 && !osc_trigger) {
 
             //--randomly trigger an event within the area.
             if (eqCords.drawRawLon.size()!= 0) {
@@ -66,11 +66,12 @@ class leapControl {
         }
       } else {
         r_mapY += 0.05;
+        leap_trigger = true;
       }
-    } else {
-      leap_trigger = true;
-      r_mapY += 0.05;
-    }
+//    } else {
+//      leap_trigger = true;
+//      r_mapY += 0.05;
+//    }
   }	
 
   float setRotationY(float hand_positionX, float r_mapY_start) {
