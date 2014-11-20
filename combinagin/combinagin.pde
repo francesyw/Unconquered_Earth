@@ -23,12 +23,12 @@ long lastTime;
 
 PGraphics glitches;
 PGraphics texts;
-PShape dead1, homeless1, injured1, date1, magnitude1;
+PImage dead1, homeless1, injured1, date1, magnitude1;
 String hourURL = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
 char hour = 'H';
 char month = 'M';
 StringList finalText;
-PFont myFont;
+PFont robotLight, robotoMedium;
 
 int oop=0;
 int slt;
@@ -38,19 +38,20 @@ boolean ifWifi=true;
 int events=0;
 int rand=0;
 int temp=0;
-color c=color(80, 216, 252, 80);
+color c=color(10, 60, 140, 80);
 void setup() {
-  size(1024, 768, P3D);
+  size(1280, 720, P3D);
   //  map=loadImage("2_Caracas.jpg");
 
-  dead1 = loadShape("dead.svg");
-  homeless1 = loadShape("homeless.svg");
-  injured1 = loadShape("injured.svg");
-  date1 = loadShape("date.svg");
-  magnitude1 = loadShape("magnitude.svg");
+  dead1 = loadImage("deaths.png");
+  homeless1 = loadImage("homeless.png");
+  injured1 = loadImage("injured.png");
+  date1 = loadImage("date.png");
+  magnitude1 = loadImage("mag.png");
   //textMode(SCREEN);
-  //myFont=createFont("HelveticaNeueLTStd-Roman.otf", 48);
-  myFont=createFont("Arial.ttf", 72);
+  //robotLight=createFont("HelveticaNeueLTStd-Roman.otf", 48);
+  robotLight=createFont("Roboto-Light.ttf", 72);
+  robotoMedium = createFont("Roboto-Medium.ttf", 72);
   ifNoInternet();
 
   eqData = new eqData();
@@ -67,10 +68,10 @@ void setup() {
   texts=createGraphics(width, height);
   glitches.beginDraw();
 
-  glitches.image(map[eventNumber], 0, 0);
+  glitches.image(map[eventNumber], 0, 0,width,height);
   glitches.filter(GRAY);
   glitches.tint(c);
-  glitches.image(map[eventNumber], 0, 0);
+  glitches.image(map[eventNumber], 0, 0,width,height);
 
 
   glitches.noStroke();
@@ -175,7 +176,9 @@ void selectGlitch() {
 
     w = (int) random(map(levelNumber, 6, 9, width/2-200, width/2+200));
     //int h = height/2;//try random?
-    h= (int)random(height/2);
+    //h= (int)random(height/2);
+    h = (int) levelNumber*20;
+    
     break;
   }
 
@@ -190,51 +193,76 @@ void selectGlitch() {
 int maxCounthour=0;
 
 void texts() {
-  //if (textOn==true){
-  int xc=20;
-  //beginDraw();
-  textFont(myFont);
-  textAlign(LEFT, CENTER);
+  textAlign(LEFT, CENTER);  
+  float pngSize = 30;
+  float textLoc = width/12*1.2;
+
+  float pngLocX = textLoc-20;
+  float pngLocY = height/16;
+
+  smooth();
+  textFont(robotLight);
+
   fill(255);
-  textSize(50);
-  text(finalText.get(0), xc, height/16*2);
-  textAlign(LEFT, TOP);
+  textSize(52);
+  text(finalText.get(0), textLoc-35, height/16*2);
+
+  textAlign(LEFT, CENTER);
   textSize(30);
-  shape(date1, xc, height/16*2.75, xc, xc);
-  text(finalText.get(1), 60, height/16*2.6);
-  shape(magnitude1, xc, height/16*3.35, xc, xc);
-  text(finalText.get(2), 60, height/16*3.2);
-  textSize(20);
-  shape(injured1, xc, height/16*4.05, xc, xc);
-  text(finalText.get(3), 60, height/16*4);
-  shape(dead1, xc, height/16*4.55, xc, xc);
-  text(finalText.get(4), 60, height/16*4.5);
-  shape(homeless1, xc, height/16*5.05, xc, xc);
-  text(finalText.get(5), 60, height/16*5);
+
+  pushStyle();
+  imageMode(CENTER);
+
+  //date
+  textSize(26);
+  image(date1, pngLocX, pngLocY*3.2+4, pngSize, pngSize);
+  text(finalText.get(1), textLoc, pngLocY*3.2);
+
+  // mag
+  image(magnitude1, pngLocX, pngLocY*4+4, pngSize, pngSize);
+  text(finalText.get(2), textLoc, pngLocY*4);
+
+  // injured
+  textSize(18);
+
+  image(injured1, pngLocX, pngLocY*4.8+4, pngSize, pngSize);
+  text(finalText.get(3), textLoc, pngLocY*4.8);
+
+  // dead
+  image(dead1, pngLocX, pngLocY*5.6+4, pngSize, pngSize);
+  text(finalText.get(4), textLoc, pngLocY*5.6);
+
+  // homeless
+  image(homeless1, pngLocX, pngLocY*6.4+4, pngSize, pngSize);
+  text(finalText.get(5), textLoc, pngLocY*6.4);
+  popStyle();
   //==============================
   if (ifWifi==true) {
     textSize(24);
     //fill(255, 0, 0);
     fill(255);
-    text("live earthquakes", xc, height/16*10);
+
+    text("live earthquakes", textLoc, height/16*10);
     fill(240, 56, 10);
 
     if (eqData.countHour !=0) {
       if (eqData.countHour > 4) {
         eqData.countHour = 4;
       }
-
+      textSize(14);
+      textFont(robotoMedium);
       for (int i = 0; i < eqData.countHour; i++) {
-       // println(eqData.countHour);
-        textSize(16);
-        text(eqData.titleList.get(i), xc, height/16*(11+i*0.5));
+        // println(eqData.countHour);
+        textSize(14);
+        text(eqData.titleList.get(i), textLoc+15, height/16*(11+i*0.5));
       }
 
       maxCounthour=eqData.countHour;
     } else {
       for (int i=0; i<maxCounthour; i++) {
-        textSize(18);
-        text(eqData.titleList.get(i), xc, height/16*(11+i*0.5));
+        textSize(14);
+        // triangle(xc, height/16*(11+i*0.5), xc-4, xc+4, xc+4, xc+5);
+        text(eqData.titleList.get(i), textLoc, height/16*(11+i*0.5));
       }
     }
   }
@@ -301,9 +329,9 @@ void realTimeUpdate() {
   if ( millis() - lastTime >= 60000 ) {
     //  *Load all_hour data
     ifNoInternet();
-    if(ifWifi==true){
-    eqData.init(hourURL);
-    eqData.update(hour);
+    if (ifWifi==true) {
+      eqData.init(hourURL);
+      eqData.update(hour);
     }
     println( "all_hour data updated!" );
     //isHour = true;
@@ -367,7 +395,7 @@ void texts() {
  if (textOn==true){
  int xc=20;
  texts.beginDraw();
- texts.textFont(myFont);
+ texts.textFont(robotLight);
  texts.textAlign(LEFT, CENTER);
  texts.fill(255);
  texts.textSize(50);
