@@ -48,6 +48,7 @@ int ii=0;
 PShape dateIcon, deathIcon, homelessIcon, injIcon, magIcon;
 
 PImage tohokuBackground;
+int glowOpac = 0;
 
 SyphonServer server;
 
@@ -76,7 +77,7 @@ void setup() {
   glow = loadImage("glow.png");
 
   //test background
-//  tohokuBackground = loadImage("71_Tohoku.jpg");
+  //  tohokuBackground = loadImage("71_Tohoku.jpg");
 
   //****NEW****//
 
@@ -116,7 +117,7 @@ void setup() {
   font = loadFont("HelveticaNeue-UltraLight-200.vlw");
   font2 = createFont("Roboto-Medium", 48, true);
 
-//  background(255);
+  //  background(255);
   smooth();
 
   // Create syhpon server to send frames out.
@@ -127,14 +128,15 @@ void setup() {
 //===================================================
 
 void draw() {
-//  pushMatrix();
-//  tint(43, 87, 128, 255);
-//  image(tohokuBackground, width/2, height/2);
-//  //slowly clears background for "drag" effect"
-//  // fill(255,12);
-//  // rect(-1, -1, width+2, height+2);
-//
-//  popMatrix();
+  glowOpac-=15;
+  //  pushMatrix();
+  //  tint(43, 87, 128, 255);
+  //  image(tohokuBackground, width/2, height/2);
+  //  //slowly clears background for "drag" effect"
+  //  // fill(255,12);
+  //  // rect(-1, -1, width+2, height+2);
+  //
+  //  popMatrix();
 
   noHands();
 
@@ -154,13 +156,26 @@ void draw() {
   realTimeUpdate();  // *Update the data every one and half minute.
 
   pushMatrix();
-  tint(254, 200);
+
+
+
+  tint(254, 255);
+  //back of the globe, so that it is always clear.
   image(back, width/2, height/2, 590, 590);
+
+//for the glowpacity (haha)
+  pushStyle();
+  if (glowOpac <= 0) {
+    glowOpac = 0;
+  }
+  tint(255, glowOpac);
+  // glow behind the globe
+  image(glow, width/2, height/2, 600, 600);
+  popStyle();
+
+
   translate(width/2, height/2, 300);
 
-  //  rotateX(radians(0.0));
-  //  rotateY(radians(0.0));
-  //  rotateZ(radians(-35.5));
   lights();
 
   pushMatrix();
@@ -168,6 +183,7 @@ void draw() {
   rotateX(radians(r_mapX));
   rotateY(radians(r_mapY));
   //-----------------------------//
+
 
   //--------------Main Globe----------------//
   scale(1.49);
@@ -293,6 +309,9 @@ void realTimeUpdate() {
   //  *Update every one and half minute
   if ( millis() - lastTime >= 60000 ) {
 
+    //glow opacity is max
+    glowOpac = 255;
+
     // checks to see if there is internet
     // place before it loads 
     ifNoInternet();
@@ -304,18 +323,15 @@ void realTimeUpdate() {
     println( "all_hour data updated!" );
 
     pushMatrix();
-    tint(254, 255);
-    image(glow, width/2, height/2, 600, 600);
+    tint(254, glowOpac);
     popMatrix();
-    
+
     lastTime = millis();
     eqCords.lastTimeRotate = millis();
-    
+
     isNew = true;
-    
   }
   eqCords.selfRotateHour();
-
 }
 
 
@@ -323,7 +339,7 @@ void renderGlobe(int tint, int tintAlpha, PImage image) {
 
   stroke(254, 0);
   //  tint(255,67);  // *Adjust transparency of the globe
-  fill(0, 35, 179, 255);
+  fill(0, 25, 125, 245);
   if (isHands == true ||mousePressed == true) {
     //tint for background circle
 
